@@ -8,6 +8,7 @@
 import * as _ from "lodash";
 
 import { Injectable } from "@angular/core";
+import { Http, Response } from "@angular/http";
 
 import { Broadcaster } from "../shared";
 import { Feed, FeedsService, FeedConnection } from "../feed";
@@ -30,37 +31,44 @@ export class RoomService {
   public holdingKey: boolean = false;
   public muteTimer: any = null;
 
-  private server: Array<string>;
-
   constructor(private config: ConfigService,
+              private http: Http,
               private feeds: FeedsService,
               private dataChannel: DataChannelService,
               private actionService: ActionService,
               private screenShareService: ScreenShareService,
               private broadcaster: Broadcaster) {
-
-    this.server = this.config.janusServer;
-
   }
 
   public connect(): Promise<any> {
     let promise: Promise<any> = new Promise<any>((resolve, reject) => {
-
       if (this.janus === null) {
-        Janus.init({debug: this.config.janusDebug});
+        this.http.get("config.json").subscribe((res: Response) => {
+          if (res.status === 200) {
+            let config: any = res.json();
+            for (let key in config) {
+              if (config.hasOwnProperty(key)) {
+                this.config[key] = config[key];
+              }
+            };
+          } else {
+            console.warn("No configuration found");
+          };
 
-        this.janus = new Janus({
-          server: this.server,
-          success: () => { resolve(); },
-          error: (error) => {
-            let msg: string = `Janus error: ${error}`;
-            msg += "\nDo you want to reload in order to retry?";
-            reject();
-            if (window.confirm(msg)) {
-              window.location.reload();
-            }
-          },
-          destroyed: () => { console.log("Janus object destroyed"); }
+          Janus.init({ debug: this.config.janusDebug });
+          this.janus = new Janus({
+            server: this.config.janusServer,
+            success: () => { resolve(); },
+            error: (error) => {
+              let msg: string = `Janus error: ${error}`;
+              msg += "\nDo you want to reload in order to retry?";
+              reject();
+              if (window.confirm(msg)) {
+                window.location.reload();
+              }
+            },
+            destroyed: () => { console.log("Janus object destroyed"); }
+          });
         });
       } else {
         resolve();

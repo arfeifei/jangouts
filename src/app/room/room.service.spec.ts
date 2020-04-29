@@ -3,6 +3,7 @@ import {
   tick,
   flushMicrotasks
 } from "@angular/core/testing";
+import { Http } from "@angular/http";
 
 import { Room} from "./room.model";
 import { RoomService } from "./room.service";
@@ -13,6 +14,10 @@ declare const window: any;
 class MockDataChannelService {
   public sendChatMessage(text: string): void {}
   public sendStatus(text: any): void {}
+}
+
+class MockHttpService {
+  public get(url: string): void {}
 }
 
 class MockActionService {
@@ -57,12 +62,14 @@ describe("Service: RoomService", () => {
     this.dataChannelService = new MockDataChannelService();
     this.actionService = new MockActionService();
     this.configService = new MockConfigService();
+    this.httpService = new MockHttpService();
     this.screenShareService = new MockScreenShareService();
     this.broadcaster = new MockBroadcaster();
 
     // create instance of service
     this.roomService = new RoomService(
       this.configService,
+      this.httpService,
       this.feedsService,
       this.dataChannelService,
       this.actionService,

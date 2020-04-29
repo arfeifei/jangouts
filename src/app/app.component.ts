@@ -7,9 +7,7 @@
 
 import { Component, OnInit } from "@angular/core";
 import { Router, Event, NavigationStart, NavigationError } from "@angular/router";
-import { Http, Response } from "@angular/http";
 
-import { ConfigService } from "./config.provider";
 import { SigninFormComponent } from "./user";
 import { RoomComponent, RoomService } from "./room";
 import { FooterComponent } from "./footer";
@@ -32,13 +30,11 @@ import { FooterComponent } from "./footer";
 })
 export class AppComponent implements OnInit {
 
-  constructor(private config: ConfigService,
+constructor(
               private roomService: RoomService,
-              private http: Http,
               private router: Router) {}
 
   public ngOnInit(): void {
-    this.getConfig();
     this.setRouterEvents();
   }
 
@@ -52,19 +48,4 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private getConfig(): void {
-    this.http.get("config.json").subscribe((res: Response) => {
-      if (res.status === 200) {
-        let config: any = res.json();
-        for (let key in config) {
-          if (config.hasOwnProperty(key)) {
-            this.config[key] = config[key];
-          }
-        };
-      } else {
-        console.warn("No configuration found");
-      };
-
-    });
-  }
 }
