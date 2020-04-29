@@ -19,7 +19,7 @@ export class VideoStreamDirective {
     if (stream !== undefined && stream !== null) {
       let video: HTMLVideoElement = <HTMLVideoElement>this.el.nativeElement;
       video.muted = this.mutted; // mute video of the local stream
-      attachMediaStream(video, stream);
+      Janus.attachMediaStream(video, stream);
     }
   }
 }

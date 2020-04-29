@@ -13,8 +13,8 @@ import "jquery";
 import "mousetrap";
 import "mousetrap/plugins/record/mousetrap-record";
 import "lodash";
-require("script!janus-gateway/html/adapter.js");
-require("script!janus-gateway/html/janus.nojquery.js");
+require("script!webrtc-adapter/release/adapter.js");
+require("script!janus-gateway/html/janus.js");
 
 /*
  * Error with the exported typings from zone.js

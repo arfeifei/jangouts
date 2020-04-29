@@ -1,10 +1,11 @@
 {
-  "name": "jangouts",
-  "license": "MIT",
-  "version": "0.4.4",
-  "dependencies": {
-    "bootstrap-sass-official": "3.3 <= 3.3.4",
-    "janus-gateway": "git://github.com/meetecho/janus-gateway.git#2ef5bb8"
-  },
-  "devDependencies": {}
+    "name": "jangouts",
+    "license": "MIT",
+    "version": "0.4.4",
+    "dependencies": {
+        "bootstrap-sass-official": "3.3 <= 3.3.4",
+        "janus-gateway": "git://github.com/meetecho/janus-gateway.git#v0.9.3",
+        "webrtc-adapter": "^6.4.0"
+    },
+    "devDependencies": {}
 }
