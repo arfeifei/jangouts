@@ -18,6 +18,8 @@ export class UserService {
 
   public user: IUSER = null;
   public settings: any = {};
+  // Pin entered by user
+  public pin: string = null;
 
   constructor() {
     this.settings = this.get(USER_SETTINGS_KEY) || {};
@@ -103,4 +105,5 @@ export class UserService {
   private set(key: string, value: any): void {
     localStorage.setItem(`jh.${key}`, JSON.stringify(value));
   }
+
 }

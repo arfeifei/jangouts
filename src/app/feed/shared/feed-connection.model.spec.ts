@@ -33,7 +33,7 @@ describe("Service: FeedConnection", () => {
 
   describe("#register", () => {
     it("should send join request as publisher", () => {
-      this.connection.register("display");
+      this.connection.register("display", "");
 
       expect(this.pluginHandle.send).toHaveBeenCalledWith(
         jasmine.objectContaining({
@@ -50,7 +50,7 @@ describe("Service: FeedConnection", () => {
 
   describe("#listen", () => {
     it("should send join request as listener", () => {
-      this.connection.listen(5);
+      this.connection.listen(5,"");
 
       expect(this.pluginHandle.send).toHaveBeenCalledWith(
         jasmine.objectContaining({

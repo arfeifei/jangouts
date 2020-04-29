@@ -14,6 +14,7 @@ import { Broadcaster } from "../shared";
 import { Feed, FeedsService, FeedConnection } from "../feed";
 import { ScreenShareService } from "../screen-share/screen-share.service";
 import { ConfigService } from "../config.provider";
+import { UserService } from "../user/user.service";
 import { DataChannelService } from "./data-channel.service";
 import { ActionService } from "./action.service";
 import { Room } from "./room.model";
@@ -37,7 +38,8 @@ export class RoomService {
               private dataChannel: DataChannelService,
               private actionService: ActionService,
               private screenShareService: ScreenShareService,
-              private broadcaster: Broadcaster) {
+              private broadcaster: Broadcaster,
+              private userService: UserService) {
   }
 
   public connect(): Promise<any> {
@@ -93,7 +95,7 @@ export class RoomService {
          */
         connection = new FeedConnection();
         connection.setAttrs(pluginHandle, this.room.id, "main");
-        connection.register(username);
+        connection.register(username, this.userService.pin);
       },
       error: (error: string): void => {
         console.error(`Error attaching plugin... ${error}`);
@@ -310,7 +312,7 @@ export class RoomService {
       success: (pluginHandle: any): void => {
         connection = new FeedConnection();
         connection.setAttrs(pluginHandle, this.room.id, "subscriber");
-        connection.listen(id);
+        connection.listen(id, this.userService.pin);
       },
       error: (error: any): void => {
         console.error(`  -- Error attaching plugin... ${error}`);

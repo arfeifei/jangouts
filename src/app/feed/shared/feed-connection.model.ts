@@ -44,22 +44,24 @@ export class FeedConnection {
     this.pluginHandle.detach();
   }
 
-  public register(display: any): void {
+  public register(display: any, pin: any): void {
     let register: any = {
       request: "join",
       room: this.roomId,
       ptype: "publisher",
-      display: display
+      display: display,
+      pin: pin || ""
     };
     this.pluginHandle.send({"message": register});
   }
 
-  public listen(feedId: number): void {
+  public listen(feedId: number, pin: any): void {
     let listen: any = {
       request: "join",
       room: this.roomId,
       ptype: "listener",
-      feed: feedId
+      feed: feedId,
+      pin: pin || ""
     };
     this.pluginHandle.send({"message": listen});
   }

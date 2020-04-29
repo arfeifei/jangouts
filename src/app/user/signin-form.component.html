@@ -1,44 +1,34 @@
 <div class="form-signin">
-  <div class="text-center">
-    <img src="../../images/jangouts-logo.png" class="jangouts-logo-login" />
-  </div>
-  <form (ngSubmit)="signin()" #loginForm="ngForm" novalidate>
-    <div class="form-group">
-      <label class="sr-only" for="inputUsername">Username</label>
-      <input id="inputUsername"
-             class="form-control input-lg"
-             type="text"
-             name="username"
-             [(ngModel)]="username"
-             required="true"
-             autofocus
-             placeholder="Username">
+    <div class="text-center">
+        <img src="../../images/jangouts-logo.png" class="jangouts-logo-login" />
     </div>
-    <div class="form-group">
-      <label class="sr-only" for="inputRoom">Room</label>
-      <!--<span *ngIf="!showRoomList && room">{{ room.label }}</span>-->
-        <!--*ngIf="showRoomsList"-->
-      <select
-        id="inputRoom"
-        class="form-control input-lg"
-        [(ngModel)]="room"
-        name="room"
-        required="true">
+    <form (ngSubmit)="signin()" #loginForm="ngForm" novalidate>
+        <div class="form-group">
+            <label class="sr-only" for="inputUsername">Username</label>
+            <input id="inputUsername" class="form-control input-lg" type="text" name="username" [(ngModel)]="username" required="true" autofocus placeholder="Username">
+        </div>
+        <div class="form-group">
+            <label class="sr-only" for="inputRoom">Room</label>
+            <!--<span *ngIf="!showRoomList && room">{{ room.label }}</span>-->
+            <!--*ngIf="showRoomsList"-->
+            <select id="inputRoom" class="form-control input-lg" [(ngModel)]="room" name="room" required="true">
         <option value="" disabled selected>Select a room</option>
         <option *ngFor="let roomopt of rooms" [ngValue]="roomopt">{{roomopt.label}}</option>
       </select>
-    </div>
-    <!--[TODO] Add textTemplate support for thumbnails mode button-->
-    <!--<jh-thumbnails-mode-button [textTemplate="true"]></jh-thumbnails-mode-button>-->
-    <button id="signInButton"
-      class="btn btn-lg btn-primary btn-block"
-      [disabled]="!loginForm.form.valid"
-      type="submit">Sign in</button>
-  </form>
-  <!-- TODO: fix jh-browser-info and jh-share-screen-hint components -->
-  <!-- <div class="login-msg"> -->
-  <!-- <jh-browser-info></jh-browser-info> -->
-  <!-- <hr/> -->
-  <!-- <jh-screen-share-hint></jh-screen-share-hint> -->
-  <!-- </div> -->
+        </div>
+        <div *ngIf="room && room.pin_required" class="form-group">
+            <label class="sr-only" for="inputPin">Pin</label>
+            <span>Please enter the right Pin to access this Room!</span>
+            <input id="inputPin" class="form-control input-lg" type="password" name="enteredPin" [(ngModel)]="enteredPin" placeholder="Pin (required)">
+        </div>
+        <!--[TODO] Add textTemplate support for thumbnails mode button-->
+        <!--<jh-thumbnails-mode-button [textTemplate="true"]></jh-thumbnails-mode-button>-->
+        <button id="signInButton" class="btn btn-lg btn-primary btn-block" [disabled]="!loginForm.form.valid" type="submit">Sign in</button>
+    </form>
+    <!-- TODO: fix jh-browser-info and jh-share-screen-hint components -->
+    <!-- <div class="login-msg"> -->
+    <!-- <jh-browser-info></jh-browser-info> -->
+    <!-- <hr/> -->
+    <!-- <jh-screen-share-hint></jh-screen-share-hint> -->
+    <!-- </div> -->
 </div>

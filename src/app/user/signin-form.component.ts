@@ -54,8 +54,8 @@ export class SigninFormComponent implements OnInit {
   public rooms: Room[] = [];
   public room: Room = null;
   public username: string = null;
+  public enteredPin: string = null;
   public showRoomsList: boolean = true;
-
 
   constructor(private roomService: RoomService,
               private userService: UserService,
@@ -86,7 +86,7 @@ export class SigninFormComponent implements OnInit {
 
   public signin(): void {
     if (this.room && this.username) {
-
+      this.userService.pin =this.enteredPin;
       let navigationExtras: NavigationExtras = {
         queryParams: { "user": this.username},
       };

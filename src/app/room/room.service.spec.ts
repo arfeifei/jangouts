@@ -53,6 +53,9 @@ class MockBroadcaster {
   public on(ev: any): void {}
 }
 
+class MockUserService{
+    public pin: string = '';
+}
 
 describe("Service: RoomService", () => {
 
@@ -65,7 +68,7 @@ describe("Service: RoomService", () => {
     this.httpService = new MockHttpService();
     this.screenShareService = new MockScreenShareService();
     this.broadcaster = new MockBroadcaster();
-
+    this.userService = new MockUserService();
     // create instance of service
     this.roomService = new RoomService(
       this.configService,
@@ -74,7 +77,8 @@ describe("Service: RoomService", () => {
       this.dataChannelService,
       this.actionService,
       this.screenShareService,
-      this.broadcaster
+      this.broadcaster,
+      this.userService
     );
 
     // create Janus mock
